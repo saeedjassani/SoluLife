@@ -9,116 +9,187 @@
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:layout_collapseMode="pin"
-                android:elevation="6dp"
-                android:title="Home"
                 android:background="@color/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Light"/>
+                android:layout_width="fill_parent"
+                android:layout_height="?actionBarSize"
+                android:title="Home"
+                card_view:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                card_view:layout_collapseMode="pin"
+                card_view:theme="@style/ThemeOverlay.AppCompat.Light" />
 
         <android.support.v4.widget.NestedScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginTop="?actionBarSize"
                 android:layout_marginBottom="60dp">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="3dp"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp">
-
                 <LinearLayout
+                        android:orientation="vertical"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="3dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
+                        android:layout_height="match_parent">
 
-                <android.support.v7.widget.CardView
-                        android:id="@+id/schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:layout_weight="0.5"
-                        card_view:cardCornerRadius="10dp"
-                        card_view:cardElevation="2dp"
-                        card_view:cardPreventCornerOverlap="false"
-                        card_view:contentPadding="-2dp">
-
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="190dp"
-                                android:id="@+id/holder_relative_layout_schedule"
+                        <LinearLayout
                                 android:orientation="horizontal"
-                                android:gravity="top|left"
-                                android:padding="8dp"
-                                android:background="@drawable/schedule">
-
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Schedule"
-                                        android:layout_marginLeft="-20dp"
-                                        android:layout_marginTop="5dp"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="24sp"
-                                        android:paddingLeft="30dp"/>
-
-                        </RelativeLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                        android:id="@+id/note"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:layout_weight="0.5"
-                        card_view:cardCornerRadius="10dp"
-                        card_view:cardElevation="2dp"
-                        card_view:cardPreventCornerOverlap="false"
-                        card_view:contentPadding="-2dp">
-
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="190dp"
-                                android:id="@+id/holder_relative_layout_note"
-                                android:orientation="horizontal"
-                                android:gravity="top|left"
-                                android:padding="8dp"
-                                android:background="@drawable/note">
-
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="-20dp"
-                                        android:layout_marginTop="5dp"
-                                        android:text="Note"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="24sp"
-                                        android:paddingLeft="30dp"/>
-
-                        </RelativeLayout>
-                </android.support.v7.widget.CardView>
-                </LinearLayout>
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <android.support.v7.widget.CardView
-                                android:id="@+id/bored"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:foreground="?android:attr/selectableItemBackground"
+                                android:weightSum="1.0">
+
+                                <android.support.v7.widget.CardView
+                                        android:id="@+id/schedule"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:foreground="?android:selectableItemBackground"
+                                        android:layout_weight="0.5"
+                                        card_view:cardCornerRadius="10dp"
+                                        card_view:cardElevation="2dp"
+                                        card_view:cardPreventCornerOverlap="false"
+                                        card_view:contentPadding="-2dp">
+
+                                        <RelativeLayout
+                                                android:layout_width="fill_parent"
+                                                android:layout_height="190dp"
+                                                android:gravity="center|left|top"
+                                                android:orientation="horizontal"
+                                                android:id="@+id/holder_relative_layout_schedule"
+                                                android:background="@drawable/schedule"
+                                                android:padding="8dp">
+
+                                                <TextView
+                                                        android:textSize="24sp"
+                                                        android:textColor="@android:color/white"
+                                                        android:paddingLeft="30dp"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="-20dp"
+                                                        android:layout_marginTop="5dp"
+                                                        android:text="Schedule" />
+
+                                        </RelativeLayout>
+                                </android.support.v7.widget.CardView>
+
+                                <android.support.v7.widget.CardView
+                                        android:id="@+id/note"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:foreground="?android:selectableItemBackground"
+                                        android:layout_weight="0.5"
+                                        card_view:cardCornerRadius="10dp"
+                                        card_view:cardElevation="2dp"
+                                        card_view:cardPreventCornerOverlap="false"
+                                        card_view:contentPadding="-2dp">
+
+                                        <RelativeLayout
+                                                android:layout_width="fill_parent"
+                                                android:layout_height="190dp"
+                                                android:gravity="center|left|top"
+                                                android:orientation="horizontal"
+                                                android:id="@+id/holder_relative_layout_note"
+                                                android:background="@drawable/note"
+                                                android:padding="8.0dip">
+
+                                                <TextView
+                                                        android:textSize="24sp"
+                                                        android:textColor="@android:color/white"
+                                                        android:paddingLeft="30dp"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="-20dp"
+                                                        android:layout_marginTop="5dp"
+                                                        android:text="Note" />
+
+                                        </RelativeLayout>
+                                </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="1.0">
+
+                                <android.support.v7.widget.CardView
+                                        android:id="@+id/bored"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:foreground="?android:selectableItemBackground"
+                                        android:layout_weight="0.5"
+                                        card_view:cardCornerRadius="10dp"
+                                        card_view:cardElevation="2dp"
+                                        card_view:cardPreventCornerOverlap="false"
+                                        card_view:contentPadding="-2dp">
+
+                                        <RelativeLayout
+                                                android:layout_width="fill_parent"
+                                                android:layout_height="190dp"
+                                                android:gravity="center|left|top"
+                                                android:orientation="horizontal"
+                                                android:id="@+id/holder_relative_layout_bored"
+                                                android:background="@drawable/bored"
+                                                android:padding="8dp">
+
+                                                <TextView
+                                                        android:textSize="24sp"
+                                                        android:textColor="@android:color/white"
+                                                        android:paddingLeft="30dp"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="-20dp"
+                                                        android:layout_marginTop="5dp"
+                                                        android:text="I'm Bored" />
+
+                                        </RelativeLayout>
+                                </android.support.v7.widget.CardView>
+
+                                <android.support.v7.widget.CardView
+                                        android:id="@+id/psychology"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3.0dip"
+                                        android:foreground="?android:selectableItemBackground"
+                                        android:layout_weight="0.5"
+                                        card_view:cardCornerRadius="10dp"
+                                        card_view:cardElevation="2dp"
+                                        card_view:cardPreventCornerOverlap="false"
+                                        card_view:contentPadding="-2dp">
+
+                                        <RelativeLayout
+                                                android:layout_width="fill_parent"
+                                                android:layout_height="190dp"
+                                                android:gravity="center|left|top"
+                                                android:orientation="horizontal"
+                                                android:id="@+id/holder_relative_layout_psychology"
+                                                android:background="@drawable/psychology"
+                                                android:padding="8dp">
+
+                                                <TextView
+                                                        android:textSize="24sp"
+                                                        android:textColor="@android:color/white"
+                                                        android:paddingLeft="30dp"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="-20dp"
+                                                        android:layout_marginTop="5dp"
+                                                        android:text="Psychology" />
+
+                                        </RelativeLayout>
+                                </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <android.support.v7.widget.CardView
+                                android:id="@+id/magnify"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3.0dp"
+                                android:foreground="?android:selectableItemBackground"
                                 android:layout_weight="0.5"
                                 card_view:cardCornerRadius="10dp"
                                 card_view:cardElevation="2dp"
@@ -126,96 +197,27 @@
                                 card_view:contentPadding="-2dp">
 
                                 <RelativeLayout
-                                        android:layout_width="match_parent"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="190dp"
-                                        android:id="@+id/holder_relative_layout_bored"
+                                        android:gravity="center|left|top"
                                         android:orientation="horizontal"
-                                        android:gravity="top|left"
-                                        android:padding="8dp"
-                                        android:background="@drawable/bored">
+                                        android:id="@+id/holder_relative_layout_magnify"
+                                        android:background="@drawable/magnify"
+                                        android:padding="8.0dip">
 
                                         <TextView
+                                                android:textSize="24sp"
+                                                android:textColor="@android:color/white"
+                                                android:paddingLeft="30dp"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginLeft="-20dp"
-                                                android:layout_marginTop="5dp"
-                                                android:text="I'm Bored"
-                                                android:textColor="@android:color/white"
-                                                android:textSize="24sp"
-                                                android:paddingLeft="30dp"/>
+                                                android:layout_marginTop="10dp"
+                                                android:text="Magnify" />
 
                                 </RelativeLayout>
                         </android.support.v7.widget.CardView>
 
-                        <android.support.v7.widget.CardView
-                                android:id="@+id/psychology"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                android:layout_weight="0.5"
-                                card_view:cardCornerRadius="10dp"
-                                card_view:cardElevation="2dp"
-                                card_view:cardPreventCornerOverlap="false"
-                                card_view:contentPadding="-2dp">
-
-                                <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="190dp"
-                                        android:id="@+id/holder_relative_layout_psychology"
-                                        android:orientation="horizontal"
-                                        android:gravity="top|left"
-                                        android:padding="8dp"
-                                        android:background="@drawable/psychology">
-
-                                        <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Psychology"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginLeft="-20dp"
-                                                android:textColor="@android:color/white"
-                                                android:textSize="24sp"
-                                                android:paddingLeft="30dp"/>
-
-                                </RelativeLayout>
-                        </android.support.v7.widget.CardView>
                 </LinearLayout>
-
-                <android.support.v7.widget.CardView
-                        android:id="@+id/magnify"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        card_view:cardCornerRadius="10dp"
-                        card_view:cardElevation="2dp"
-                        card_view:cardPreventCornerOverlap="false"
-                        card_view:contentPadding="-2dp">
-
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:id="@+id/holder_relative_layout_magnify"
-                                android:orientation="horizontal"
-                                android:gravity="top|left"
-                                android:padding="8dp"
-                                android:background="@drawable/magnify">
-
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Magnify"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginLeft="-20dp"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="28sp"
-                                        android:paddingLeft="30dp"/>
-
-                        </RelativeLayout>
-                </android.support.v7.widget.CardView>
-
-        </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-
 </android.support.design.widget.CoordinatorLayout>

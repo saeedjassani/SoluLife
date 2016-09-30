@@ -139,17 +139,7 @@ public class ViewNoteCollapseActivity extends AppCompatActivity {
         }*/
 
         cardView = (CardView) findViewById(R.id.content);
-
-            cardView.setCardBackgroundColor(getResources().getColor(R.color.cardWhite));
-
-        if(cardedit){
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    editNote();
-                }
-            });
-        }
+        cardView.setCardBackgroundColor(getResources().getColor(R.color.cardWhite));
 
         editButton = (FloatingActionButton) findViewById(R.id.edit_note_button);
         editButton.setOnClickListener(new View.OnClickListener() {

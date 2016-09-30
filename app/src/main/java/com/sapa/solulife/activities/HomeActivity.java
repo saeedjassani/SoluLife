@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.sapa.solulife.R;
+import com.sapa.solulife.fragments.BreatheFragment;
 import com.sapa.solulife.fragments.MainFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 						break;
 
 					case R.id.breathe:
-						switchFragment(new MainFragment());
+						switchFragment(new BreatheFragment());
 						break;
 
 				}

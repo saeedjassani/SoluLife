@@ -124,7 +124,7 @@ public class NotesActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.listNotes);
         recyclerView.setHasFixedSize(true);
 
-                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         
 
         setupNotesAdapter();
@@ -183,9 +183,7 @@ public class NotesActivity extends AppCompatActivity {
                 note1 = notesData.get(position);
                 exportTextPos = position;
                 fingerprint = notesData.get(position);
-                
-                    getLongItemList();
-                
+                getLongItemList();
             }
         });
     }
@@ -286,11 +284,7 @@ public class NotesActivity extends AppCompatActivity {
                 Note note = (Note) data.getSerializableExtra(EXTRA_NOTE);
                 long noteId = databaseHelper.createNote(note);
                 note.setId(noteId);
-                if (sortl.equals("Newest First") || sortl.equals("Sort By Title(Aescending)") || sortl.equals("Sort By Title(Descending)")) {
-                    notesData.add(0, note);
-                } else {
-                    notesData.add(note);
-                }
+                notesData.add(0, note);
                 updateView();
                 notesAdapter.notifyDataSetChanged();
             } else if (resultCode == RESULT_FIRST_USER) {
@@ -327,7 +321,6 @@ public class NotesActivity extends AppCompatActivity {
                 note.setUpdatedAt(updatedNote.getUpdatedAt());
                 note.setColor(updatedNote.getColor());
                 note.setFavourite(updatedNote.getFavourite());
-                note.setLock_status(updatedNote.getLock_status());
             }
         }
         notesAdapter.notifyDataSetChanged();

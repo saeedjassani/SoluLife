@@ -17,6 +17,19 @@
         </activity>
         <activity android:name=".activities.IAmBoredActivity">
         </activity>
+        <activity
+                android:name=".Notes.EditNoteActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:windowSoftInputMode="stateHidden"
+                android:parentActivityName=".Notes.NotesActivity">
+        </activity>
+
+        <activity android:name=".Notes.NotesActivity"/>
+
+        <activity android:name=".Notes.ViewNoteCollapseActivity"
+                  android:parentActivityName=".Notes.NotesActivity"/>
+
+
         <activity android:name=".activities.ScheduleActivity">
         </activity>
     </application>

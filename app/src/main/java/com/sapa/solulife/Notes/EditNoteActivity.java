@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.sapa.solulife.R;
 
 import java.text.DateFormat;
@@ -62,6 +63,7 @@ public class EditNoteActivity extends AppCompatActivity {
     private Boolean fabdrwble;
     private List<Note> notesData;
     private DatabaseHelper databaseHelper;
+    SystemBarTintManager systemBarTintManager;
 
     private Boolean save;
     private FloatingActionButton saveButton;
@@ -147,6 +149,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
 
         ll = (LinearLayout) findViewById(R.id.llmain);
+        ll1 = (LinearLayout) findViewById(R.id.ll1);
 
         if(note.getColor() == Color.TRANSPARENT){
             selectedColor = preselect;
@@ -158,10 +161,12 @@ public class EditNoteActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-
+        systemBarTintManager = new SystemBarTintManager(this);
+        systemBarTintManager.setStatusBarTintEnabled(true);
         ll.setBackgroundColor(selectedColor);
         ll1.setBackgroundColor(selectedColor);
         toolbar.setBackgroundColor(note.getColor());
+        systemBarTintManager.setStatusBarTintColor(selectedColor);
 
     }
 

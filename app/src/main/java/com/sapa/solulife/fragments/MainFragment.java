@@ -1,6 +1,7 @@
 package com.sapa.solulife.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+import com.sapa.solulife.Notes.NotesActivity;
+import com.sapa.solulife.Notes.NotesAdapter;
 import com.sapa.solulife.activities.HomeActivity;
 import com.sapa.solulife.R;
 
@@ -16,14 +21,14 @@ import com.sapa.solulife.R;
  * Created by Pooja S on 9/30/2016.
  */
 
-public class MainFragment extends Fragment implements View.OnClickListener {
+public class MainFragment extends Fragment{
 
     private View mainView;
     private Context context;
 
     Toolbar toolbar;
     CoordinatorLayout coordinatorLayout;
-    CardView schedulec, notec, boredc, psychologyc, magnifyc;
+    RelativeLayout schedulec, notec, boredc, psychologyc, magnifyc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +42,19 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         coordinatorLayout = (CoordinatorLayout) mainView.findViewById(R.id.coordinatinglayout);
 
-        schedulec = (CardView) mainView.findViewById(R.id.schedule);
-        notec = (CardView) mainView.findViewById(R.id.note);
-        boredc = (CardView) mainView.findViewById(R.id.bored);
-        psychologyc = (CardView) mainView.findViewById(R.id.psychology);
-        magnifyc = (CardView) mainView.findViewById(R.id.magnify);
+        schedulec = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout);
+        notec = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_note);
+        boredc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_bored);
+        psychologyc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_psychology);
+        magnifyc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_magnify);
+
+        notec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Notes", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), NotesActivity.class));
+            }
+        });
 
         return mainView;
     }
@@ -59,31 +72,5 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 .commit();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
 
-            case R.id.schedule:
-
-                break;
-
-            case R.id.note:
-
-                break;
-
-            case R.id.bored:
-
-                break;
-
-            case R.id.psychology:
-
-                break;
-
-            case R.id.magnify:
-
-                break;
-
-
-        }
-    }
 }
