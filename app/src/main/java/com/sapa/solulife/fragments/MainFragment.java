@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.sapa.solulife.activities.MainActivity;
+import com.sapa.solulife.activities.HomeActivity;
 import com.sapa.solulife.R;
 
 /**
@@ -47,7 +47,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setActionBar(Toolbar toolbar) {
-        MainActivity activity = ((MainActivity) getActivity());
+        HomeActivity activity = ((HomeActivity) getActivity());
         activity.setSupportActionBar(toolbar);
         activity.updateToggleButton(toolbar);
     }

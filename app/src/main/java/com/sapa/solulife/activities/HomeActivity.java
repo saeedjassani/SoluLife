@@ -15,7 +15,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 import com.sapa.solulife.R;
 import com.sapa.solulife.fragments.MainFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
 	CoordinatorLayout coordinatorLayout;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_home);
 
 		context = this;
 		switchFragment1(new MainFragment());

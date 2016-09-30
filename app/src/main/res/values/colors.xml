@@ -3,4 +3,170 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#bfbfbf</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="selected_note">#ffc9eaff</color>
+    <color name="primaryColor">#1976D2</color>
+    <color name="primaryColor1">#1968c8</color>
+    <color name="material_dialog">#ff1c8211</color>
+    <color name="material_dialog1">#fff50805</color>
+    <color name="black">#ff2b2b2b</color>
+    <color name="black1">#ff747474</color>
+    <color name="black2">#313131</color>
+    <color name="blacknavdrawer">#2f2f2f</color>
+    <color name="trueblacknavdrawer">#1f1f1f</color>
+    <color name="viewcontent">#d9312c2a</color>
+    <color name="toolbarblack">#1d1d1d</color>
+    <color name="actionmodebg">#0f0f0f</color>
+
+    <color name="darkaction">#1b1b1b</color>
+
+    <color name="black3">#2b2b2b</color>
+    <color name="amoledcard">#0e0e0e</color>
+
+    <color name="textColorBlack">#44403f</color>
+    <color name="cardWhite">#fafafa</color>
+
+    <!--Quickly-->
+    <color name="notification_background">#FFECB438</color>
+
+    <color name="title_background_color">#e0e0e0</color>
+    <color name="update_text_color">#9e9e9e</color>
+    <color name="edit_text_color">#424242</color>
+
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="accent">#FF5722</color>
+    <color name="accent_dark">#dd2c00</color>
+    <color name="accent_light">#ff9e80</color>
+
+    <color name="dialog_default">#1976D2</color>
+
+    <color name="materialchange">#F50057</color>
+
+    <color name="primary_light">#C5CAE9</color>
+    <color name="text">#FFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="divider_color">#B6B6B6</color>
+
+    <color name="material_dialogsy">#ff1c8211</color>
+    <color name="material_dialogsn">#fff50805</color>
+
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="blackstatus">#ff1e1e1e</color>
+
+    <color name="normalstatus">#0e5ab1</color>
+
+    <color name="material_drawer_selected_text">#536EEA</color>
+    <color name="material_drawer_dark_selected_text">#536EEA</color>
+
+
+    <color name="material_drawer_primary">#4BAE4F</color>
+    <color name="material_drawer_primary_dark">#378D3B</color>
+    <color name="material_drawer_primary_light">#C8E5C9</color>
+    <color name="material_drawer_accent">#FE5621</color>
+    <color name="material_drawer_background">#303030</color>
+    <color name="material_drawer_icons">#000</color>
+    <!-- <color name="material_drawer_primary_text"></color>-->
+    <color name="material_drawer_secondary_text">#DEDEDE</color>
+    <color name="material_drawer_hint_text">#ABABAB</color>
+    <color name="material_drawer_contrast_text">#000</color>
+    <color name="material_drawer_divider">#555555</color>
+    <color name="material_drawer_selected">#262626</color>
+
+    <color name="grey_light">#e3e3e3</color>
+
+    <!--Elements-->
+
+    <color name="activated_item">@color/grey_light</color>
+
+    <!--Floating Action Menus-->
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
+    <color name="blue_semi_transparent">#805677fc</color>
+    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+
+    <!-- ActionModeColors -->
+    <color name="whitetheme">#eaeaea</color>
+    <color name="greentheme">#4CAF50</color>
+    <color name="greytheme">#868686</color>
+    <color name="grey800theme">#424242</color>
+    <color name="bluegreytheme">#607D8B</color>
+    <color name="bluegrey800theme">#546E7A</color>
+    <color name="browntheme">#795548</color>
+    <color name="redtheme">#F44336</color>
+    <color name="pinktheme">#E91E63</color>
+    <color name="purpletheme">#9C27B0</color>
+    <color name="deeppurpletheme">#5E35B1</color>
+    <color name="indigotheme">#3F51B5</color>
+    <color name="bluetheme">#1E88E5</color>
+    <color name="lightbluetheme">#03A9F4</color>
+    <color name="cyantheme">#00BCD4</color>
+    <color name="tealtheme">#009688</color>
+    <color name="teal400theme">#1DE9B6</color>
+    <color name="green400theme">#00E676</color>
+    <color name="green700theme">#00C853</color>
+    <color name="lightgreentheme">#8BC34A</color>
+    <color name="yellowtheme">#FFEB3B</color>
+    <color name="ambertheme">#FFC107</color>
+    <color name="amber600theme">#FFAB00</color>
+    <color name="limetheme">#CDDC39</color>
+    <color name="orangetheme">#FF9800</color>
+    <color name="deeporangetheme">#FF5722</color>
+
+    <!--COLORPALETTE-->
+    <color name="accent_color">#ff009688</color>
+    <color name="background_color">#fff8f8f9</color>
+    <color name="blue">#ff0188d1</color>
+    <color name="blue_200">#ff6889ff</color>
+    <color name="blueberry">#ff3f5ca9</color>
+    <color name="cyan">#ff00bcd4</color>
+    <color name="dark_brown">#ff795548</color>
+    <color name="dark_grey">#ff455a64</color>
+    <color name="dark_yellow">#fff5be25</color>
+    <color name="deep_purple">#ff7c4dff</color>
+    <color name="flamingo">#ffe57b72</color>
+    <color name="grape">#ff8d2345</color>
+    <color name="lavender">#ff7885ca</color>
+    <color name="light_grey">#ff607d8b</color>
+    <color name="light_orange">#ffff7043</color>
+    <color name="light_pink">#ffff4081</color>
+    <color name="light_purple">#ffe040fb</color>
+    <color name="light_yellow">#ffffeb3b</color>
+    <color name="lime">#ffcddc39</color>
+    <color name="lite_blue">#ff359ff2</color>
+    <color name="material_blue">#ff2196f3</color>
+    <color name="material_blue_500">#ff5677fc</color>
+    <color name="material_blue_600">#ff4e6cef</color>
+    <color name="material_blue_grey_800">#ff37474f</color>
+    <color name="material_blue_grey_900">#ff263238</color>
+    <color name="material_blue_grey_950">#ff21272b</color>
+    <color name="material_deep_teal_200">#ff80cbc4</color>
+    <color name="material_deep_teal_500">#ff009688</color>
+    <color name="peacock">#ff029ae4</color>
+    <color name="purple">#ff9c27b0</color>
+    <color name="red_200">#ffff5177</color>
+    <color name="sage">#ff33b679</color>
+    <color name="tangerine">#fff3501d</color>
+
+    <color name="colorDivider">#1f000000</color>
+    <!-- App Theme Engine -->
+    <color name="colorPrimaryLightDefault">#FAFAFA</color>
+    <color name="colorAccentLightDefault">#E91E63</color>
+
+    <color name="colorPrimaryDarkDefault">#1c1c1d</color>
+    <color name="colorAccentDarkDefault">#2196F3</color>
+
+    <color name="colorPrimaryBlackDefault">#191b1b</color>
+    <color name="colorAccentBlackDefault">#0063b1</color>
+
+    <!--FingerPrint-->
+    <color name="warning_color">#f4511e</color>
+    <color name="success_color">#009688</color>
+    <color name="material_red_500">#F44336</color>
 </resources>

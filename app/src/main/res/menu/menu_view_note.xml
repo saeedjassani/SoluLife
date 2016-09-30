@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.yurkiv.materialnotes.activity.ViewNoteActivity">
+
+
+    <item android:id="@+id/favourite"
+          android:title="Favourite"
+          android:icon="@drawable/home"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/share_note"
+          android:icon="@drawable/home"
+          app:showAsAction="always" android:title="asd"/>
+
+    <item android:id="@+id/copy_note"
+          android:icon="@drawable/home"
+          app:showAsAction="always" android:title="asd"/>
+
+    <item android:id="@+id/delete_note"
+          android:icon="@drawable/home"
+          app:showAsAction="always" android:title="asd"/>
+
+    <item
+            android:id="@+id/read"
+            app:showAsAction="never"
+            android:title="Listen Content" />
+
+    <item
+            android:id="@+id/font"
+            app:showAsAction="never"
+            android:title="Font Size">
+
+        <menu >
+            <group
+                    android:id="@+id/group2"
+                    android:checkableBehavior="single">
+                <item
+                        android:id="@+id/submenu1"
+                        android:title="Small" />
+                <item
+                        android:id="@+id/submenu2"
+                        android:title="Normal" />
+                <item
+                        android:id="@+id/submenu3"
+                        android:title="Large" />
+                <item
+                        android:id="@+id/submenu4"
+                        android:title="Extra Large" />
+            </group>
+        </menu>
+
+    </item>
+
+</menu>
