@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/drawer_header_root"
+              android:layout_width="match_parent"
+              android:layout_height="170dp"
+              android:orientation="vertical"
+              android:tag="background|primary_color" >
+
+    <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="65dp"
+            android:paddingLeft="-4dp"
+            android:contentDescription="asd"/>
+
+</LinearLayout>
