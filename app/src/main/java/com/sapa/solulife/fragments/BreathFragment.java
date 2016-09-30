@@ -24,7 +24,7 @@ import com.sapa.solulife.activities.HomeActivity;
  * Created by Pooja S on 9/30/2016.
  */
 
-public class BreatheFragment extends Fragment {
+public class BreathFragment extends Fragment {
 
     private View mainView;
     private Context context;

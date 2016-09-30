@@ -12,11 +12,13 @@
 
     <item android:id="@+id/share_note"
           android:icon="@drawable/home"
-          app:showAsAction="always" android:title="asd"/>
+          app:showAsAction="always"
+          android:title="asd"/>
 
     <item android:id="@+id/copy_note"
           android:icon="@drawable/home"
-          app:showAsAction="always" android:title="asd"/>
+          app:showAsAction="always"
+          android:title="asd"/>
 
     <item android:id="@+id/delete_note"
           android:icon="@drawable/home"

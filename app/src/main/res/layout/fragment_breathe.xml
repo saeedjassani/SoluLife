@@ -16,14 +16,22 @@
             card_view:layout_collapseMode="pin"
             card_view:theme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_marginTop="20dp">
+
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/start_button"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/home"
             android:layout_gravity="top|center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:adjustViewBounds="false"
+            android:layout_weight="0.5"
             android:tag="bg_tint_accent_color_selector_lighter"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
@@ -34,10 +42,13 @@
             android:layout_height="120dp"
             android:src="@drawable/home"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="60dp"
             android:adjustViewBounds="false"
+            android:layout_weight="0.26"
             android:tag="bg_tint_accent_color_selector_lighter"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
+
+        </LinearLayout>
 
 </LinearLayout>

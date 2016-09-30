@@ -123,9 +123,7 @@ public class NotesActivity extends AppCompatActivity {
         
         recyclerView = (RecyclerView) findViewById(R.id.listNotes);
         recyclerView.setHasFixedSize(true);
-
-                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         setupNotesAdapter();
         updateView();
@@ -333,6 +331,21 @@ public class NotesActivity extends AppCompatActivity {
         updateView();
         notesAdapter.notifyDataSetChanged();
         Toast.makeText(NotesActivity.this, "Note Deleted.", Toast.LENGTH_LONG).show();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                super.onBackPressed();
+                break;
+        }
+        return true;
     }
 
 }
