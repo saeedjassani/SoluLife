@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".activities.IAmBoredActivity">
         </activity>
+        <activity android:name=".activities.ScheduleActivity">
+        </activity>
     </application>
 
 </manifest>
