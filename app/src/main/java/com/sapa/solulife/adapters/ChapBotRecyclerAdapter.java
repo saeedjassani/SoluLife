@@ -48,7 +48,7 @@ public class ChapBotRecyclerAdapter extends RecyclerView.Adapter<ChapBotRecycler
 
 		TextView textView;
 
-		public MyViewHolder(View itemView) {
+		MyViewHolder(View itemView) {
 			super(itemView);
 			textView = (TextView) itemView.findViewById(R.id.chat_text);
 		}

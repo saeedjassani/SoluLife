@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "682624120584",
+    "firebase_url": "https://solulife-e655c.firebaseio.com",
+    "project_id": "solulife-e655c",
+    "storage_bucket": "solulife-e655c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682624120584:android:6b89c0e86b94b16b",
+        "android_client_info": {
+          "package_name": "com.sapa.solulife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682624120584-4p7kkk44m5ucrh0gl2ifon9qs0gpnu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDtYQiSN_-_iyLeGFJ5AXAUiEtcP89l2E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
