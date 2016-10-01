@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +35,10 @@ public class AddScheduleActivity extends AppCompatActivity {
 			public void onClick(View view) {
 
 				FirebaseApp firebaseApp = FirebaseApp.getInstance();
+				if (firebaseApp == null) {
+					Toast.makeText(AddScheduleActivity.this, "Check your network connection", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(firebaseApp);
 				DatabaseReference databaseReference = firebaseDatabase.getReference("solulife-e655c/Schedule");
 

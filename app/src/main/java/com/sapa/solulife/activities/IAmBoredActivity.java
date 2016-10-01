@@ -13,7 +13,7 @@ import com.google.firebase.database.*;
 import com.sapa.solulife.R;
 import com.sapa.solulife.adapters.ChatBotRecyclerAdapter;
 import com.sapa.solulife.data.ChatData;
-import com.sapa.solulife.utils.Constant;
+import com.sapa.solulife.utils.Constants;
 
 
 public class IAmBoredActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class IAmBoredActivity extends AppCompatActivity {
 					String message = editText.getText().toString();
 					if (message.equals("")) return;
 					Toast.makeText(IAmBoredActivity.this, "messafe is" + message, Toast.LENGTH_SHORT).show();
-					ChatData chatData = new ChatData(Constant.user_id, message, 1);
+					ChatData chatData = new ChatData(Constants.user_id, message, 1);
 					databaseReference.push().setValue(chatData);
 					editText.setText("");
 //					Uri parse = parse_string(chatData.getMessage());

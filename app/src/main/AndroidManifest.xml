@@ -10,11 +10,9 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
         <activity android:name=".activities.IAmBoredActivity">
         </activity>
-        <activity android:name=".activities.ScheduleActivity">
+        <activity android:name=".activities.ScheduleActivity" />
         <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,7 +34,7 @@
 
 
         <activity android:name=".Expense.ExpenseActivity"
-                android:title="Finance"/>
+                  android:title="Finance"/>
 
         <activity android:name=".Expense.NewExpenseActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
