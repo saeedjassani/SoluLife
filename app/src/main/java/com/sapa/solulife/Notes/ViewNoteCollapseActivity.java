@@ -188,10 +188,10 @@ public class ViewNoteCollapseActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_view_note, menu);
 
         if(note.getFavourite() == 1) {
-            menu.findItem(R.id.favourite).setIcon(R.drawable.home);
+            menu.findItem(R.id.favourite).setIcon(R.drawable.star);
             return true;
         }
-        menu.findItem(R.id.favourite).setIcon(R.drawable.home);
+        menu.findItem(R.id.favourite).setIcon(R.drawable.star_outline);
 
         return true;
     }

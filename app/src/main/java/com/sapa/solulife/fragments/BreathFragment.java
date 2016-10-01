@@ -57,7 +57,7 @@ public class BreathFragment extends Fragment {
                     private long time = 0;
                     @Override
                     public void run(){
-                        vibrator.vibrate(6000);
+                        vibrator.vibrate(10000);
                         time += 7000;
                         vibrator.cancel();
                         Log.d("Breathe", "Going for... " + time);
@@ -70,6 +70,7 @@ public class BreathFragment extends Fragment {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                vibrator.cancel();
                 vibrator.cancel();
             }
         });

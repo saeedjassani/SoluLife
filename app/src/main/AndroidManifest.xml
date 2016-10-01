@@ -3,6 +3,8 @@
           package="com.sapa.solulife">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
             android:allowBackup="true"
@@ -44,6 +46,12 @@
 
         <activity android:name=".activities.AddScheduleActivity">
         </activity>
+
+        <activity android:name=".activities.MagnifyActivity"/>
+
+        <activity android:name=".Reminders.ReminderActivity"/>
+
+        <activity android:name=".Reminders.EditReminder"/>
     </application>
 
 </manifest>

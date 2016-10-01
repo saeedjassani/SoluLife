@@ -1,37 +1,43 @@
-package com.sapa.solulife.Notes;
+package com.sapa.solulife.Reminders;
 
-/**
- * Created by Pooja S on 9/30/2016.
- */
 import android.app.Activity;
 import android.content.Context;
-
 import android.graphics.Color;
-
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.sapa.solulife.Database.DatabaseHelper;
+import com.sapa.solulife.Notes.Note;
 import com.sapa.solulife.R;
 
 import java.text.DateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
+/**
+ * Created by Pooja S on 10/1/2016.
+ */
 
-    private List<Note> notes;
+public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder>{
+
+    private List<Reminder> notes;
     Context context;
-    private static OnItemClickListener onItemClickListener;
-    private static OnLongItemClickListener onLongItemClickListener;
+    private static ReminderAdapter.OnItemClickListener onItemClickListener;
+    private static ReminderAdapter.OnLongItemClickListener onLongItemClickListener;
     public DatabaseHelper databaseHelper;
     Activity activity;
     private int which;
-    private List<Note> filteredList;
+    private List<Reminder> filteredList;
     private int lastPosition = -1;
     View view;
     String drawableText;
@@ -40,19 +46,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
 
     private static final DateFormat DATETIME_FORMAT = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
-    public NotesAdapter(List<Note> notes,Context context, Activity activity) {
+    public ReminderAdapter(List<Reminder> notes,Context context, Activity activity) {
         this.notes = notes;
         this.context = context;
         this.activity = activity;
-        this.filteredList = new ArrayList<>();
     }
 
-    public static void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        NotesAdapter.onItemClickListener = onItemClickListener;
+    public static void setOnItemClickListener(ReminderAdapter.OnItemClickListener onItemClickListener) {
+        ReminderAdapter.onItemClickListener = onItemClickListener;
     }
 
-    public static void setOnLongItemClickListener(OnLongItemClickListener onLongItemClickListener) {
-        NotesAdapter.onLongItemClickListener = onLongItemClickListener;
+    public static void setOnLongItemClickListener(ReminderAdapter.OnLongItemClickListener onLongItemClickListener) {
+        ReminderAdapter.onLongItemClickListener = onLongItemClickListener;
     }
 
 
@@ -67,9 +72,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     }
 
 
-    public static Comparator<Note> newestFirstComparator = new Comparator<Note>() {
+    public static Comparator<Reminder> newestFirstComparator = new Comparator<Reminder>() {
         @Override
-        public int compare(Note lhs, Note rhs) {
+        public int compare(Reminder lhs, Reminder rhs) {
             String lDate = lhs.getUpdatedAt();
             String rDate = rhs.getUpdatedAt();
             return rDate.compareTo(lDate);
@@ -77,17 +82,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     };
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notes_row, parent, false);
-        return new ViewHolder(view);
+    public ReminderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminder_row, parent, false);
+        return new ReminderAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ReminderAdapter.ViewHolder holder, int position) {
 
         int color = context.getResources().getColor(R.color.white);
 
-        Note note = notes.get(position);
+        Reminder note = notes.get(position);
         holder.textRow.setText(note.getTitle());
         holder.textUpdated.setText(note.getUpdatedAt());
 
@@ -97,12 +102,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
             hashText.setSpan(new ForegroundColorSpan(Color.parseColor("#FF5722")), matcher.start(), matcher.end(), 0);
         }
 
-        if(note.getFavourite() == 1){
-            holder.star.setVisibility(View.INVISIBLE);
-        }else if(note.getFavourite() == 0){
-            holder.star.setVisibility(View.INVISIBLE);
+        if(note.getReminderStatus()==1){
+            holder.star.setImageDrawable(context.getResources().getDrawable(R.drawable.blur));
         }
-
 
         holder.textContent.setMaxLines(8);
         holder.cardView.setCardBackgroundColor(note.getColor());
@@ -127,7 +129,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
             super(parent);
             view = parent;
             textRow = (TextView) parent.findViewById(R.id.textRow);
-            textContent = (TextView) parent.findViewById(R.id.note_content);
             textUpdated = (TextView) parent.findViewById(R.id.note_date);
             star = (ImageView) parent.findViewById(R.id.star);
             cardView = (CardView) parent.findViewById(R.id.cardview);

@@ -106,28 +106,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <android.support.design.widget.TextInputLayout
-                    android:id="@+id/inputlayoutContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="17dp"
-                    android:layout_marginTop="-20dp"
-                    android:paddingBottom="5dp">
+            <TextView
+                    android:id="@+id/reminderDate"
+                    android:text="Reminder Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-                <EditText
-                        android:id="@+id/note_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Content"
-                        android:paddingTop="8dp"
-                        android:textSize="16dp"
-                        android:gravity="top"
-                        android:background="@android:color/transparent"
-                        android:layout_marginLeft="7dp"
-                        android:tag="tint_accent_color,text_primary,textsize_subheading"
-                        android:layout_marginRight="3dp" />
-
-            </android.support.design.widget.TextInputLayout>
+            <TextView
+                    android:id="@+id/reminderTime"
+                    android:text="Reminder Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </ScrollView>

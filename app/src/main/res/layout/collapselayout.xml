@@ -138,7 +138,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:clickable="true"
-            android:src="@drawable/home"
+            android:src="@drawable/ic_edit"
             android:tag="bg_tint_accent_color_selector_lighter"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />

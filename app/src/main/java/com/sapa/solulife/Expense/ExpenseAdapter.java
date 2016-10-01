@@ -6,6 +6,7 @@ package com.sapa.solulife.Expense;
 import android.app.Activity;
 import android.content.Context;
 
+import android.graphics.Camera;
 import android.graphics.Color;
 
 import android.support.v7.widget.CardView;
@@ -27,9 +28,8 @@ import java.util.regex.Pattern;
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder>{
 
     private List<Expense> notes;
+
     Context context;
-    private static ExpenseAdapter.OnItemClickListener onItemClickListener;
-    private static ExpenseAdapter.OnLongItemClickListener onLongItemClickListener;
     public DatabaseHelper databaseHelper;
     Activity activity;
     private int which;
@@ -47,15 +47,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         this.context = context;
         this.activity = activity;
     }
-
-    public static void setOnItemClickListener(ExpenseAdapter.OnItemClickListener onItemClickListener) {
-        ExpenseAdapter.onItemClickListener = onItemClickListener;
-    }
-
-    public static void setOnLongItemClickListener(ExpenseAdapter.OnLongItemClickListener onLongItemClickListener) {
-        ExpenseAdapter.onLongItemClickListener = onLongItemClickListener;
-    }
-
 
     @Override
     public long getItemId(int position) {
@@ -78,13 +69,13 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     };
 
     @Override
-    public ExpenseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expense_rows, parent, false);
-        return new ExpenseAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ExpenseAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         Expense note = notes.get(position);
         holder.textRow.setText(note.getTitle());
@@ -121,20 +112,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             star = (TextView) parent.findViewById(R.id.star);
             cardView = (CardView) parent.findViewById(R.id.cardview);
             relativeLayout = (RelativeLayout) parent.findViewById(R.id.relativeLayout);
-            parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(getPosition(), v);
-                }
-            });
-            parent.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    onLongItemClickListener.onLongItemClick(getPosition(), v);
-                    return true;
-                }
-            });
-
         }
     }
 

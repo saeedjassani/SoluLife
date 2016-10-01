@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.sapa.solulife.Notes.Note;
+import com.sapa.solulife.Reminders.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NOTES = "notes";
     public static final String TABLE_EXPENSE = "expense";
     public static final String TABLE_BUDGET = "budget";
+    public static final String TABLE_REMINDER = "reminder";
 
     public static final String KEY_ID = "id";
     public static final String KEY_TITLE = "title";
@@ -47,10 +49,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_BUDGET = "expense_budget";
     public static final String KEY_BUDGET_STATUS = "expense_budget_status";
 
-    private static final String CREATE_TABLE_NOTE = "CREATE TABLE "
+    public static final String KEY_REMINDER_DATE = "reminder_date";
+    public static final String KEY_REMINDER_STATUS = "reminder_status";
+    public static final String KEY_REMINDER_TIME = "reminder_time";
+
+    private static final String CREATE_TABLE_REMINDER = "CREATE TABLE "
             + TABLE_NOTES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_TITLE + " TEXT, "
             + KEY_CONTENT + " TEXT, "
+            + KEY_UPDATED_AT + " TEXT, "
+            + KEY_COLOR + " INT, "
+            + KEY_REMINDER_DATE + " TEXT, "
+            + KEY_REMINDER_TIME+" TEXT, "
+            + KEY_REMINDER_STATUS+" INT"+" )";
+
+    private static final String CREATE_TABLE_NOTE = "CREATE TABLE "
+            + TABLE_NOTES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + KEY_TITLE + " TEXT, "
             + KEY_UPDATED_AT + " TEXT, "
             + KEY_COLOR + " INT, "
             + KEY_FAVOURITE + " INT" + " )";
@@ -64,8 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_EXPENSE_BUDGET = "CREATE TABLE "
             + TABLE_BUDGET + "(" + KEY_BUDGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + KEY_BUDGET + " INT, "
-            + KEY_BUDGET_STATUS+" INT"+" )";
+            + KEY_BUDGET + " INT"+" )";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -77,6 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("onCreate", "onCreate");
         try {
             db.execSQL(CREATE_TABLE_NOTE);
+            db.execSQL(CREATE_TABLE_REMINDER);
             db.execSQL(CREATE_TABLE_EXPENSE);
             db.execSQL(CREATE_TABLE_EXPENSE_BUDGET);
         } catch (SQLiteException e) {
@@ -102,6 +117,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_NOTES, null, values);
     }
 
+    public long createReminder(Reminder note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, note.getTitle());
+        values.put(KEY_UPDATED_AT, note.getUpdatedAt());
+        values.put(KEY_COLOR, note.getColor());
+        values.put(KEY_REMINDER_DATE, note.getReminderDate());
+        values.put(KEY_REMINDER_TIME, note.getReminderTime());
+        values.put(KEY_REMINDER_STATUS, note.getReminderStatus());
+        return db.insert(TABLE_REMINDER, null, values);
+    }
+
     public long createExpenseNote(Expense expense){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -112,12 +139,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_EXPENSE, null, values);
     }
 
-    public void createBudget(float budget, int status){
+    public void createBudget(float budget){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(KEY_BUDGET_ID, 1);
         values.put(KEY_BUDGET, budget);
-        values.put(KEY_BUDGET_STATUS,status);
         db.insert(TABLE_BUDGET, null, values);
     }
 
@@ -135,32 +161,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public int getBudgetStatus(){
-        int result=0;
-        SQLiteDatabase db=this.getReadableDatabase();
-        String selectQuery="SELECT "+KEY_BUDGET_STATUS+" FROM "+ TABLE_BUDGET+" WHERE "+KEY_BUDGET_ID+" = 1";
-        Log.e(LOG, selectQuery);
-        Cursor cursor=db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()){
-            do {
-                result = cursor.getInt(cursor.getColumnIndex(KEY_BUDGET_STATUS));
-            }while (cursor.moveToNext());
-        }
-        return result;
-    }
-
     public void updateBudget(float expense) {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(KEY_BUDGET_ID, 1);
         values.put(KEY_BUDGET, expense);
-        values.put(KEY_BUDGET_STATUS,1);
-        db.update(TABLE_BUDGET, values, KEY_ID + " = ?", new String[]{String.valueOf(KEY_BUDGET_ID)});
+        db.update(TABLE_BUDGET, values, KEY_BUDGET_ID + " = ?", new String[]{String.valueOf(1)});
     }
 
     public void deleteBudget(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_BUDGET+" WHERE "+KEY_EXPENSE_ID+ " = 1");
+        db.execSQL("DELETE FROM "+TABLE_BUDGET+" WHERE "+KEY_BUDGET_ID+ " = 1");
     }
 
     public List<Note> getAllNotes() {
@@ -179,6 +190,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     note.setUpdatedAt(cursor.getString(cursor.getColumnIndex(KEY_UPDATED_AT)));
                     note.setColor(cursor.getInt(cursor.getColumnIndex(KEY_COLOR)));
                     note.setFavourite(cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)));
+                    result.add(note);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return result;
+    }
+
+    public List<Reminder> getReminderNotes() {
+        List<Reminder> result = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_REMINDER;
+        Log.e(LOG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Reminder note = new Reminder();
+                    note.setId(cursor.getLong(cursor.getColumnIndex(KEY_ID)));
+                    note.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
+                    note.setUpdatedAt(cursor.getString(cursor.getColumnIndex(KEY_UPDATED_AT)));
+                    note.setColor(cursor.getInt(cursor.getColumnIndex(KEY_COLOR)));
+                    note.setReminderDate(cursor.getString(cursor.getColumnIndex(KEY_REMINDER_DATE)));
+                    note.setReminderTime(cursor.getString(cursor.getColumnIndex(KEY_REMINDER_TIME)));
+                    note.setReminderStatus(cursor.getInt(cursor.getColumnIndex(KEY_BUDGET_STATUS)));
                     result.add(note);
                 } while (cursor.moveToNext());
             }
@@ -224,6 +263,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_UPDATED_AT, note.getUpdatedAt());
         values.put(KEY_COLOR, note.getColor());
         values.put(KEY_FAVOURITE, note.getFavourite());
+        db.update(TABLE_REMINDER, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
+    }
+
+    public void updateReminder(Reminder note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, note.getTitle());
+        values.put(KEY_UPDATED_AT, note.getUpdatedAt());
+        values.put(KEY_COLOR, note.getColor());
+        values.put(KEY_REMINDER_DATE, note.getReminderDate());
+        values.put(KEY_REMINDER_TIME, note.getReminderTime());
+        values.put(KEY_REMINDER_STATUS, note.getReminderStatus());
         db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
     }
 
@@ -240,6 +291,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NOTES, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
+    }
+
+    public void deleteReminder(Reminder note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_REMINDER, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
     }
 
     public void deleteExpense(Expense expense) {
