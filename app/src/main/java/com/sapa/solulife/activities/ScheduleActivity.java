@@ -6,18 +6,25 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sapa.solulife.R;
 import com.sapa.solulife.data.ScheduleData;
+import com.sapa.solulife.utils.Constants;
 
 public class ScheduleActivity extends AppCompatActivity {
+
+	Firebase mRef;
 
 	RecyclerView recyclerView;
 //	ScheduleRecyclerAdapter adapter;
@@ -32,11 +39,11 @@ public class ScheduleActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
 
-		Toast.makeText(ScheduleActivity.this, "in sche", Toast.LENGTH_SHORT).show();
-
 		recyclerView = (RecyclerView) findViewById(R.id.schedule_recycler);
 
-		Firebase mRef = null;
+		Firebase.setAndroidContext(this);
+		mRef = new Firebase("https://solulife-e655c.firebaseio.com/Schedule");
+		Log.d(Constants.LOG_TAG, "onCreate: after mref");
 		FirebaseRecyclerAdapter<ScheduleData, MyHolderView> adapter =
 				new FirebaseRecyclerAdapter<ScheduleData, MyHolderView>(
 				ScheduleData.class,
@@ -46,11 +53,38 @@ public class ScheduleActivity extends AppCompatActivity {
 		) {
 			@Override
 			protected void populateViewHolder(MyHolderView myHolderView, ScheduleData scheduleData, int i) {
-
-
+				Log.d(Constants.LOG_TAG, "populateViewHolder: ");
+				Toast.makeText(ScheduleActivity.this, "in poropr", Toast.LENGTH_SHORT).show();
 				myHolderView.type.setText(scheduleData.getType());
 			}
 		};
+
+		mRef.addChildEventListener(new ChildEventListener() {
+			@Override
+			public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+			}
+
+			@Override
+			public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+			}
+
+			@Override
+			public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+			}
+
+			@Override
+			public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError) {
+
+			}
+		});
 
 
 
@@ -63,7 +97,7 @@ public class ScheduleActivity extends AppCompatActivity {
 				startActivity(new Intent(ScheduleActivity.this, AddScheduleActivity.class));
 			}
 		});
-		setUpFirebase();
+//		setUpFirebase();
 		recyclerView.setAdapter(adapter);
 
 

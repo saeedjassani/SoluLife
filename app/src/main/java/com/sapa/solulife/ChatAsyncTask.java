@@ -6,6 +6,7 @@ import android.util.Log;
 import com.sapa.solulife.data.ChatReply;
 import com.sapa.solulife.data.KeyValuePairData;
 import com.sapa.solulife.utils.Constants;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -60,8 +61,7 @@ public class ChatAsyncTask extends AsyncTask<String, Void, Boolean> {
 			urlConnection.setDoOutput(true);
 
 			List<KeyValuePairData> nameValuePair = new ArrayList<KeyValuePairData>();
-			nameValuePair.add(new KeyValuePairData("user_id", params[1]));
-			nameValuePair.add(new KeyValuePairData("occasion_id", params[2]));
+			nameValuePair.add(new KeyValuePairData("string", params[1]));
 
 			outputStream = urlConnection.getOutputStream();
 
@@ -77,8 +77,9 @@ public class ChatAsyncTask extends AsyncTask<String, Void, Boolean> {
 				response = convertInputStreamToString(inputStream);
 
 				Log.d(Constants.LOG_TAG, " The response is " + response);
-
-//				Constants.galleryOverviewData = LoganSquare.parseList(response, GalleryOverviewData.class);
+				JSONObject jsonObject = new JSONObject(response);
+				Constants.userData.reply = jsonObject.getString("reply");
+				Constants.userData.flag = jsonObject.getInt("flag");
 				return true;
 
 			} else {

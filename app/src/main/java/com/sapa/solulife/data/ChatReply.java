@@ -6,6 +6,6 @@ package com.sapa.solulife.data;
 
 public class ChatReply {
 
-	String reply;
-	int flag;
+	public String reply;
+	public int flag;
 }
