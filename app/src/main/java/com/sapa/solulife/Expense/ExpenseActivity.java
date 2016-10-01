@@ -1,31 +1,30 @@
-package com.sapa.solulife.Notes;
-/**
- * Created by prasad on 2/22/2015.
- * Updated by prasad on 6/28/2015
- */
+package com.sapa.solulife.Expense;
 
 import android.app.NotificationManager;
-import android.content.*;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.*;
-
-
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import com.sapa.solulife.Database.DatabaseHelper;
+import com.sapa.solulife.Database.Expense;
+import com.sapa.solulife.Notes.*;
 import com.sapa.solulife.R;
 
 import java.util.Collections;
@@ -33,14 +32,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class NotesActivity extends AppCompatActivity {
+/**
+ * Created by Pooja S on 9/30/2016.
+ */
+
+public class ExpenseActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
 
     private TextView textEmpty;
-    private TextView textEmpty1;
-    private List<Note> notesData;
-    private NotesAdapter notesAdapter;
+    private TextView textEmpty1, budget_amount;
+    private List<Expense> notesData;
+    private ExpenseAdapter expenseAdapter;
     private SearchView searchView;
     private MenuItem searchMenuItem;
     private static Context context;
@@ -92,18 +95,23 @@ public class NotesActivity extends AppCompatActivity {
     String sortl;
     String add = "add";
 
-    Note fingerprint,note1;
+    Expense fingerprint,note1;
 
     String folderLocation;
 
     View revealView;
+    AlertDialog.Builder dialogBuilder;
+    View dialogView;
+    AlertDialog alertDialog;
+
+    Button addExpense;
 
     private static final String EXTRA_NOTE = "EXTRA_NOTE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);
+        setContentView(R.layout.activity_expense);
 
         context = getApplicationContext();
 
@@ -115,16 +123,51 @@ public class NotesActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         textEmpty = (TextView) findViewById(R.id.textEmpty);
-        textEmpty.setText("No Notes");
         textEmpty1 = (TextView) findViewById(R.id.textEmpty1);
         textEmpty1.setVisibility(View.GONE);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.clayout);
 
+        budget_amount = (TextView) findViewById(R.id.budget_amount);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        
+
+        addExpense = (Button) findViewById(R.id.add_expense);
+        addExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBuilder = new AlertDialog.Builder(ExpenseActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                dialogView = inflater.inflate(R.layout.custom_dialog, null);
+                final EditText text = (EditText)dialogView.findViewById(R.id.budget_text);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseHelper.createBudget(Float.parseFloat(text.getText().toString()), 1);
+                        budget_amount.setText(String.valueOf(text.getText().toString()));
+                        if(databaseHelper.getBudgetStatus() == 1){
+                            databaseHelper.updateBudget(Float.parseFloat(text.getText().toString()));
+                            budget_amount.setText(String.valueOf(text.getText().toString()));
+                        }
+                    }
+                });
+                dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.hide();
+                    }
+                });
+
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+        budget_amount.setText(String.valueOf(databaseHelper.getBudget()));
+
         recyclerView = (RecyclerView) findViewById(R.id.listNotes);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         setupNotesAdapter();
         updateView();
@@ -132,25 +175,14 @@ public class NotesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NotesActivity.this, EditNoteActivity.class);
+                Intent intent = new Intent(ExpenseActivity.this, NewExpenseActivity.class);
                 intent.putExtra("edit", add);
                 startActivityForResult(intent, RequestResultCode.REQUEST_CODE_ADD_NOTE);
-                //overridePendingTransition(R.anim.slide_in_child_bottom, R.anim.slide_out);
             }
         });
-        
-       
-                sortList1(NotesAdapter.newestFirstComparator);
-               
 
-        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
-                    tts.setLanguage(Locale.UK);
-                }
-            }
-        });
+
+        sortList1(ExpenseAdapter.newestFirstComparator);
 
         setListeners();
     }
@@ -165,14 +197,8 @@ public class NotesActivity extends AppCompatActivity {
         NotesAdapter.setOnItemClickListener(new NotesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                final Note note = notesData.get(position);
-                
-                    Intent intentn = new Intent(NotesActivity.this, ViewNoteCollapseActivity.class);
-                    intentn.putExtra(EXTRA_NOTE, note);
-                    startActivityForResult(intentn, RequestResultCode.REQUEST_CODE_VIEW_NOTE);
-                    //overridePendingTransition(R.anim.slide_in_child_bottom, R.anim.slide_out);
-                    intentn.putExtra(STAGGER_CONTENT, note);
-                
+                final Expense note = notesData.get(position);
+                getLongItemList();
             }
         });
 
@@ -190,43 +216,32 @@ public class NotesActivity extends AppCompatActivity {
     public void getLongItemList(){
 
         final CharSequence[] items = {
-                "Delete  Note", "Listen Content", "Copy Content"
+                "Delete  Note"
         };
 
         new AlertDialog.Builder(this)
-        .setTitle("Make your selection")
-        .setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                switch (item){
-                    case 0:
-                        databaseHelper.deleteNote(note1);
-                        notesData.remove(note1);
-                        updateView();
-                        notesAdapter.notifyDataSetChanged();
-                        break;
+                .setTitle("Options")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        switch (item){
+                            case 0:
+                                databaseHelper.deleteExpense(note1);
+                                notesData.remove(note1);
+                                updateView();
+                                expenseAdapter.notifyDataSetChanged();
+                                break;
 
-                    case 1:
-                        ttsContent = note1.getContent();
-                        tts.speak(ttsContent, 0, null);
-                        break;
 
-                    case 2:
-
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        clipboard.setText("Title:\n" + note1.getTitle() + "\nContent:\n" + note1.getContent());
-                        Snackbar.make(coordinatorLayout, "Note Copied", Snackbar.LENGTH_SHORT).show();
-
-                        break;
-                }
-            }
-        }).show();
+                        }
+                    }
+                }).show();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        notesAdapter.notifyDataSetChanged();
+        expenseAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -234,9 +249,9 @@ public class NotesActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void sortList1(Comparator<Note> noteComparator) {
+    public void sortList1(Comparator<Expense> noteComparator) {
         Collections.sort(notesData, noteComparator);
-        notesAdapter.notifyDataSetChanged();
+        expenseAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -250,9 +265,9 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     private void setupNotesAdapter() {
-        notesData = databaseHelper.getAllNotes();
-        notesAdapter = new NotesAdapter(notesData, context, NotesActivity.this);
-        recyclerView.setAdapter(notesAdapter);
+        notesData = databaseHelper.getAllExpenses();
+        expenseAdapter = new ExpenseAdapter(notesData, context, ExpenseActivity.this);
+        recyclerView.setAdapter(expenseAdapter);
     }
 
     private void updateView() {
@@ -272,7 +287,7 @@ public class NotesActivity extends AppCompatActivity {
         if (requestCode == RequestResultCode.REQUEST_CODE_VIEW_NOTE) {
             if (resultCode == RESULT_OK) {
                 updateNote(data);
-                notesAdapter.notifyDataSetChanged();
+                expenseAdapter.notifyDataSetChanged();
             } else if (resultCode == RequestResultCode.RESULT_CODE_DELETE_NOTE) {
                 deleteNote(data);
             }
@@ -280,12 +295,14 @@ public class NotesActivity extends AppCompatActivity {
 
         if (requestCode == RequestResultCode.REQUEST_CODE_ADD_NOTE) {
             if (resultCode == RESULT_OK) {
-                Note note = (Note) data.getSerializableExtra(EXTRA_NOTE);
-                long noteId = databaseHelper.createNote(note);
+                Expense note = (Expense) data.getSerializableExtra(EXTRA_NOTE);
+                long noteId = databaseHelper.createExpenseNote(note);
                 note.setId(noteId);
                 notesData.add(0, note);
                 updateView();
-                notesAdapter.notifyDataSetChanged();
+                expenseAdapter.notifyDataSetChanged();
+                databaseHelper.getBudget();
+                budget_amount.setText(String.valueOf(databaseHelper.getBudget()));
             } else if (resultCode == RESULT_FIRST_USER) {
                 addNote(data);
             }
@@ -293,45 +310,42 @@ public class NotesActivity extends AppCompatActivity {
 
         if(resultCode == RequestResultCode.RESULT_CODE_SEARCH){
             setupNotesAdapter();
-            notesAdapter.notifyDataSetChanged();
+            expenseAdapter.notifyDataSetChanged();
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void addNote(Intent data) {
-        Note note = (Note) data.getSerializableExtra(EXTRA_NOTE);
-        if (sortl.equals("Newest First") || sortl.equals("Sort By Title(Aescending)") || sortl.equals("Sort By Title(Descending)")) {
-            notesData.add(0, note);
-        } else {
-            notesData.add(note);
-        }
+        Expense note = (Expense) data.getSerializableExtra(EXTRA_NOTE);
+        notesData.add(0, note);
+        notesData.add(note);
         updateView();
-        notesAdapter.notifyDataSetChanged();
+        expenseAdapter.notifyDataSetChanged();
     }
 
     private void updateNote(Intent data) {
-        Note updatedNote = (Note) data.getSerializableExtra(EXTRA_NOTE);
-        databaseHelper.updateNote(updatedNote);
-        for (Note note : notesData) {
+        Expense updatedNote = (Expense) data.getSerializableExtra(EXTRA_NOTE);
+        databaseHelper.updateExpense(updatedNote);
+        for (Expense note : notesData) {
             if (note.getId().equals(updatedNote.getId())) {
                 note.setTitle(updatedNote.getTitle());
-                note.setContent(updatedNote.getContent());
-                note.setUpdatedAt(updatedNote.getUpdatedAt());
-                note.setColor(updatedNote.getColor());
-                note.setFavourite(updatedNote.getFavourite());
+                note.setNote(updatedNote.getNote());
+                note.setDate(updatedNote.getDate());
+                note.setAmount(updatedNote.getAmount());
+                note.setBudget(updatedNote.getBudget());
             }
         }
-        notesAdapter.notifyDataSetChanged();
+        expenseAdapter.notifyDataSetChanged();
     }
 
     private void deleteNote(Intent data) {
-        Note deletedNote = (Note) data.getSerializableExtra(EXTRA_NOTE);
-        databaseHelper.deleteNote(deletedNote);
+        Expense deletedNote = (Expense) data.getSerializableExtra(EXTRA_NOTE);
+        databaseHelper.deleteExpense(deletedNote);
         notesData.remove(deletedNote);
         updateView();
-        notesAdapter.notifyDataSetChanged();
-        Toast.makeText(NotesActivity.this, "Note Deleted.", Toast.LENGTH_LONG).show();
+        expenseAdapter.notifyDataSetChanged();
+        Toast.makeText(ExpenseActivity.this, "Note Deleted.", Toast.LENGTH_LONG).show();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

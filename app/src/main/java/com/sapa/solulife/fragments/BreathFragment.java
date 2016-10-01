@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class BreathFragment extends Fragment {
     CoordinatorLayout coordinatorLayout;
     RelativeLayout schedulec, notec, boredc, psychologyc, magnifyc;
     FloatingActionButton start, stop;
+    Vibrator vibrator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class BreathFragment extends Fragment {
         toolbar = (Toolbar) mainView.findViewById(R.id.toolbar_breathe);
         setActionBar(toolbar);
         toolbar.setTitle("Breathe");
-        final Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         start = (FloatingActionButton) mainView.findViewById(R.id.start_button);
         stop = (FloatingActionButton) mainView.findViewById(R.id.stop_button);
@@ -69,7 +71,6 @@ public class BreathFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 vibrator.cancel();
-                vibrator.cancel();
             }
         });
 
@@ -81,4 +82,32 @@ public class BreathFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         activity.updateToggleButton(toolbar);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    vibrator.cancel();
+                    switchFragment(new MainFragment());
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void switchFragment(Fragment fragment) {
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.fragment_holder, fragment).commit();
+    }
+
+
 }

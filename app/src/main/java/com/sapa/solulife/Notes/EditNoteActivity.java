@@ -3,24 +3,16 @@ package com.sapa.solulife.Notes;
 /**
  * Created by Pooja S on 9/30/2016.
  */
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -31,23 +23,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.sapa.solulife.Database.DatabaseHelper;
 import com.sapa.solulife.R;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 
 public class EditNoteActivity extends AppCompatActivity {
 

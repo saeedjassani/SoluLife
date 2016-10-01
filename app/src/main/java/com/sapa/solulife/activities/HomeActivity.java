@@ -1,6 +1,7 @@
 package com.sapa.solulife.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.sapa.solulife.Expense.ExpenseActivity;
 import com.sapa.solulife.R;
 import com.sapa.solulife.fragments.BreathFragment;
 import com.sapa.solulife.fragments.MainFragment;
@@ -45,7 +47,8 @@ public class HomeActivity extends AppCompatActivity {
 						break;
 
 					case R.id.finance:
-						switchFragment(new MainFragment());
+						//switchFragment(new MainFragment());
+						startActivity(new Intent(getApplicationContext(), ExpenseActivity.class));
 						break;
 
 					case R.id.diet:

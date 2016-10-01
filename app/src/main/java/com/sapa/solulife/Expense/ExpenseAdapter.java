@@ -1,7 +1,7 @@
-package com.sapa.solulife.Notes;
+package com.sapa.solulife.Expense;
 
 /**
- * Created by Pooja S on 9/30/2016.
+ * Created by Pooja S on 10/1/2016.
  */
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.*;
 import android.widget.*;
 import com.sapa.solulife.Database.DatabaseHelper;
+import com.sapa.solulife.Database.Expense;
+import com.sapa.solulife.Notes.Note;
 import com.sapa.solulife.R;
 
 import java.text.DateFormat;
@@ -22,12 +24,12 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
+public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder>{
 
-    private List<Note> notes;
+    private List<Expense> notes;
     Context context;
-    private static OnItemClickListener onItemClickListener;
-    private static OnLongItemClickListener onLongItemClickListener;
+    private static ExpenseAdapter.OnItemClickListener onItemClickListener;
+    private static ExpenseAdapter.OnLongItemClickListener onLongItemClickListener;
     public DatabaseHelper databaseHelper;
     Activity activity;
     private int which;
@@ -40,19 +42,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
 
     private static final DateFormat DATETIME_FORMAT = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
-    public NotesAdapter(List<Note> notes,Context context, Activity activity) {
+    public ExpenseAdapter(List<Expense> notes, Context context, Activity activity) {
         this.notes = notes;
         this.context = context;
         this.activity = activity;
-        this.filteredList = new ArrayList<>();
     }
 
-    public static void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        NotesAdapter.onItemClickListener = onItemClickListener;
+    public static void setOnItemClickListener(ExpenseAdapter.OnItemClickListener onItemClickListener) {
+        ExpenseAdapter.onItemClickListener = onItemClickListener;
     }
 
-    public static void setOnLongItemClickListener(OnLongItemClickListener onLongItemClickListener) {
-        NotesAdapter.onLongItemClickListener = onLongItemClickListener;
+    public static void setOnLongItemClickListener(ExpenseAdapter.OnLongItemClickListener onLongItemClickListener) {
+        ExpenseAdapter.onLongItemClickListener = onLongItemClickListener;
     }
 
 
@@ -67,55 +68,38 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     }
 
 
-    public static Comparator<Note> newestFirstComparator = new Comparator<Note>() {
+    public static Comparator<Expense> newestFirstComparator = new Comparator<Expense>() {
         @Override
-        public int compare(Note lhs, Note rhs) {
-            String lDate = lhs.getUpdatedAt();
-            String rDate = rhs.getUpdatedAt();
+        public int compare(Expense lhs, Expense rhs) {
+            String lDate = lhs.getDate();
+            String rDate = rhs.getDate();
             return rDate.compareTo(lDate);
         }
     };
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notes_row, parent, false);
-        return new ViewHolder(view);
+    public ExpenseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expense_rows, parent, false);
+        return new ExpenseAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ExpenseAdapter.ViewHolder holder, int position) {
 
-        int color = context.getResources().getColor(R.color.white);
-        int color1 = context.getResources().getColor(R.color.black);
-        int color2 = context.getResources().getColor(R.color.primary_dark);
-        int black = context.getResources().getColor(R.color.toolbarblack);
-
-        Note note = notes.get(position);
+        Expense note = notes.get(position);
         holder.textRow.setText(note.getTitle());
-        holder.textUpdated.setText(note.getUpdatedAt());
+        holder.textUpdated.setText(note.getDate());
+        holder.textContent.setText(note.getNote());
+        holder.textContent.setMaxLines(7);
 
-        SpannableString hashText = new SpannableString(note.getContent());
-        Matcher matcher = Pattern.compile("#([A-Za-z1-9_-]+)").matcher(hashText);
-        while (matcher.find()) {
-            hashText.setSpan(new ForegroundColorSpan(Color.parseColor("#FF5722")), matcher.start(), matcher.end(), 0);
+        String check = note.getTitle();
+        if(check.equalsIgnoreCase("Clothing") || check.equalsIgnoreCase("E-Commerce") || check.equalsIgnoreCase("Extras") || check.equalsIgnoreCase("Food") || check.equalsIgnoreCase("Movies") || check.equalsIgnoreCase("Stocks")){
+            holder.star.setTextColor(Color.RED);
+            holder.star.setText(String.valueOf(note.getAmount()));
+        }else if(check.equalsIgnoreCase("Bank") || check.equalsIgnoreCase("Deposit") || check.equalsIgnoreCase("Extras (Savings)") || check.equalsIgnoreCase("Gift")){
+            holder.star.setTextColor(Color.GREEN);
+            holder.star.setText(String.valueOf(note.getAmount()));
         }
-
-        if(note.getFavourite() == 1){
-            holder.star.setVisibility(View.INVISIBLE);
-        }else if(note.getFavourite() == 0){
-            holder.star.setVisibility(View.INVISIBLE);
-        }
-
-
-            holder.textContent.setMaxLines(8);
-
-            holder.cardView.setCardBackgroundColor(note.getColor());
-
-
-            holder.textRow.setTextColor(color);
-            holder.textContent.setTextColor(color);
-            holder.textContent.setLinkTextColor(color);
-            holder.textUpdated.setTextColor(color);
 
     }
 
@@ -123,7 +107,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
         public TextView textRow;
         public TextView textContent;
         public TextView textUpdated;
-        public ImageView imageView,star,lock;
+        public TextView star;
         public final View view;
         public CardView cardView;
         public RelativeLayout relativeLayout;
@@ -134,7 +118,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
             textRow = (TextView) parent.findViewById(R.id.textRow);
             textContent = (TextView) parent.findViewById(R.id.note_content);
             textUpdated = (TextView) parent.findViewById(R.id.note_date);
-            star = (ImageView) parent.findViewById(R.id.star);
+            star = (TextView) parent.findViewById(R.id.star);
             cardView = (CardView) parent.findViewById(R.id.cardview);
             relativeLayout = (RelativeLayout) parent.findViewById(R.id.relativeLayout);
             parent.setOnClickListener(new View.OnClickListener() {
