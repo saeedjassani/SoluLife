@@ -10,6 +10,11 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".activities.IAmBoredActivity">
+        </activity>
+        <activity android:name=".activities.ScheduleActivity">
         <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -39,6 +44,8 @@
                   android:parentActivityName=".Expense.ExpenseActivity"/>
 
 
+        <activity android:name=".activities.AddScheduleActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.sapa.solulife.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,12 @@ import java.util.List;
  * Created by Saeed Jassani on 30-09-2016.
  */
 
-public class ChapBotRecyclerAdapter extends RecyclerView.Adapter<ChapBotRecyclerAdapter.MyViewHolder> {
+public class ChatBotRecyclerAdapter extends RecyclerView.Adapter<ChatBotRecyclerAdapter.MyViewHolder> {
 
 	private final Activity activity;
 	List<ChatData> dataList = new ArrayList<>();
 
-	public ChapBotRecyclerAdapter(Activity activity) {
+	public ChatBotRecyclerAdapter(Activity activity) {
 		this.activity = activity;
 	}
 
@@ -41,7 +42,16 @@ public class ChapBotRecyclerAdapter extends RecyclerView.Adapter<ChapBotRecycler
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		holder.textView.setText(dataList.get(position).getMessage());
+		switch (dataList.get(position).getPlace()) {
+			case 0:
+				holder.textView.setText(dataList.get(position).getMessage());
+				holder.textView.setBackgroundColor(Color.CYAN);
+				break;
+			case 1:
+				holder.textView.setText(dataList.get(position).getMessage());
+				holder.textView.setBackgroundColor(Color.GRAY);
+				break;
+		}
 	}
 
 	class MyViewHolder extends RecyclerView.ViewHolder {

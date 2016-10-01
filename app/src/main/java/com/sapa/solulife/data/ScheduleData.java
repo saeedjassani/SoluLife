@@ -11,6 +11,9 @@ public class ScheduleData {
 	private String type, description, quantity;
 	private Date startDate;
 
+	public ScheduleData() {
+	}
+
 	public ScheduleData(String type, String description, String quantity, Date startDate) {
 		this.type = type;
 		this.description = description;

@@ -10,6 +10,9 @@ public class ChatData {
 	private String message;
 	private int place;
 
+	public ChatData() {
+	}
+
 	public ChatData(int user_id, String message, int place) {
 		this.user_id = user_id;
 		this.message = message;
