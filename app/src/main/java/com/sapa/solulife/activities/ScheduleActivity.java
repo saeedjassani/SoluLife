@@ -1,6 +1,6 @@
 package com.sapa.solulife.activities;
 
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -94,10 +94,18 @@ public class ScheduleActivity extends AppCompatActivity {
 		actionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(ScheduleActivity.this, AddScheduleActivity.class));
+
+				Dialog dialog = new Dialog(ScheduleActivity.this);
+				dialog.setContentView(R.layout.activity_add_schedule);
+				dialog.show();
+
+
+//				startActivity(new Intent(ScheduleActivity.this, AddScheduleActivity.class));
 			}
 		});
 //		setUpFirebase();
+		recyclerView.setLayoutManager(layoutManager);
+		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
 
 

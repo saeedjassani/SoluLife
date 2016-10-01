@@ -1,4 +1,4 @@
-package com.sapa.solulife;
+package com.sapa.solulife.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,8 +11,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ import java.util.List;
 public class ChatAsyncTask extends AsyncTask<String, Void, Boolean> {
 
 	URL url;
-	HttpURLConnection urlConnection;
+	URLConnection urlConnection;
 	String response;
 	InputStream inputStream;
 
@@ -54,26 +54,26 @@ public class ChatAsyncTask extends AsyncTask<String, Void, Boolean> {
 		if (Constants.userData == null) Constants.userData = new ChatReply();
 
 		try {
-			url = new URL(params[0]);
+			url = new URL(params[0] + "/" + params[1]);
 			urlConnection = (HttpURLConnection) url.openConnection();
-			urlConnection.setRequestMethod("POST");
-			urlConnection.setDoInput(true);
-			urlConnection.setDoOutput(true);
+			URLConnection ucon = url.openConnection();
+			ucon.setConnectTimeout(5000);
+			ucon.setReadTimeout(5000);
 
+/*
 			List<KeyValuePairData> nameValuePair = new ArrayList<KeyValuePairData>();
 			nameValuePair.add(new KeyValuePairData("string", params[1]));
+
+
 
 			outputStream = urlConnection.getOutputStream();
 
 			bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
 			bufferedWriter.write(writeToOutputStream(nameValuePair));
 			bufferedWriter.flush();
+*/
 
-			int status_code = urlConnection.getResponseCode();
-
-
-			if (status_code == 200) {
-				inputStream = new BufferedInputStream(urlConnection.getInputStream());
+				inputStream = new BufferedInputStream(ucon.getInputStream());
 				response = convertInputStreamToString(inputStream);
 
 				Log.d(Constants.LOG_TAG, " The response is " + response);
@@ -82,9 +82,6 @@ public class ChatAsyncTask extends AsyncTask<String, Void, Boolean> {
 				Constants.userData.flag = jsonObject.getInt("flag");
 				return true;
 
-			} else {
-				return false;
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

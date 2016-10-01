@@ -1,55 +1,53 @@
 package com.sapa.solulife.data;
 
-import java.util.Date;
-
 /**
  * Created by Saeed Jassani on 30-09-2016.
  */
 
 public class ScheduleData {
 
-	private String type, description, quantity;
-	private Date startDate;
+	private String category, desc, qty;
+	private String start_time;
 
 	public ScheduleData() {
 	}
 
-	public ScheduleData(String type, String description, String quantity, Date startDate) {
-		this.type = type;
-		this.description = description;
-		this.quantity = quantity;
-		this.startDate = startDate;
+	public ScheduleData(String type, String description, String quantity, String start_time) {
+		this.category = type;
+		this.desc = description;
+		this.qty = quantity;
+		this.start_time = start_time;
 	}
 
 	public String getType() {
-		return type;
+		return category;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.category = type;
 	}
 
 	public String getDescription() {
-		return description;
+		return desc;
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.desc = description;
 	}
 
-	public String getQuantity() {
-		return quantity;
+	public String getQty() {
+		return qty;
 	}
 
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
+	public void setQty(String qty) {
+		this.qty = qty;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getStart_time() {
+		return start_time;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
 	}
 }

@@ -42,7 +42,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 				FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(firebaseApp);
 				DatabaseReference databaseReference = firebaseDatabase.getReference("solulife-e655c/Schedule");
 
-				ScheduleData scheduleData = new ScheduleData(type.getText().toString(), desc.getText().toString(), quty.getText().toString(), new Date());
+				ScheduleData scheduleData = new ScheduleData(type.getText().toString(), desc.getText().toString(), quty.getText().toString(), new Date().toString());
 
 				databaseReference.push().setValue(scheduleData);
 

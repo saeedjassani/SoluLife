@@ -1,5 +1,7 @@
 package com.sapa.solulife.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.*;
 import com.sapa.solulife.R;
 import com.sapa.solulife.adapters.ChatBotRecyclerAdapter;
+import com.sapa.solulife.async.ChatAsyncTask;
 import com.sapa.solulife.data.ChatData;
 import com.sapa.solulife.utils.Constants;
 
@@ -38,6 +41,29 @@ public class IAmBoredActivity extends AppCompatActivity {
 					ChatData chatData = new ChatData(Constants.user_id, message, 1);
 					databaseReference.push().setValue(chatData);
 					editText.setText("");
+					new ChatAsyncTask(IAmBoredActivity.this, new ChatAsyncTask.ChatAsyncTaskCallback() {
+						@Override
+						public void onStart(boolean status) {
+							Toast.makeText(IAmBoredActivity.this, "please wait", Toast.LENGTH_SHORT).show();
+
+						}
+
+						@Override
+						public void onResult(boolean result) {
+							Toast.makeText(IAmBoredActivity.this, "res is " + result, Toast.LENGTH_SHORT).show();
+							if (result) {
+								if (Constants.userData.flag == 0) {
+									ChatData chatData1 = new ChatData(Constants.user_id, Constants.userData.reply, 0);
+									databaseReference.push().setValue(chatData1);
+								} else {
+									Intent intent = new Intent(Intent.ACTION_VIEW);
+									intent.setData(Uri.parse(Constants.userData.reply));
+									startActivity(Intent.createChooser(intent, "Open via"));
+								}
+							}
+
+						}
+					}).execute("http://192.168.127.30:5000/bot", message);
 //					Uri parse = parse_string(chatData.getMessage());
 /*
 					if (parse == null) {

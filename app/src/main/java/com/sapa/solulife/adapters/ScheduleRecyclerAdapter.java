@@ -38,8 +38,8 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
 	public void onBindViewHolder(MyHolderView holder, int position) {
 		holder.type.setText(dataList.get(position).getType());
 		holder.desc.setText(dataList.get(position).getDescription());
-		holder.quantity.setText(dataList.get(position).getQuantity());
-		holder.time.setText(dataList.get(position).getStartDate().getDate());
+		holder.quantity.setText(dataList.get(position).getQty());
+		holder.time.setText(dataList.get(position).getStart_time());
 	}
 
 	@Override
