@@ -14,8 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.sapa.solulife.Notes.NotesActivity;
 import com.sapa.solulife.Notes.NotesAdapter;
+import com.sapa.solulife.Reminders.ReminderActivity;
 import com.sapa.solulife.activities.HomeActivity;
 import com.sapa.solulife.R;
+import com.sapa.solulife.activities.IAmBoredActivity;
 
 /**
  * Created by Pooja S on 9/30/2016.
@@ -42,17 +44,30 @@ public class MainFragment extends Fragment{
 
         coordinatorLayout = (CoordinatorLayout) mainView.findViewById(R.id.coordinatinglayout);
 
-        schedulec = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout);
+        //schedulec = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout);
         notec = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_note);
         boredc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_bored);
-        psychologyc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_psychology);
+        psychologyc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_reminder);
         magnifyc = (RelativeLayout) mainView.findViewById(R.id.holder_relative_layout_magnify);
 
         notec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Notes", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), NotesActivity.class));
+            }
+        });
+
+        psychologyc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ReminderActivity.class));
+            }
+        });
+
+        boredc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), IAmBoredActivity.class));
             }
         });
 

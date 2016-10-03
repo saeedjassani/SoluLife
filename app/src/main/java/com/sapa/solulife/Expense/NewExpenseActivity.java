@@ -149,7 +149,7 @@ public class NewExpenseActivity extends AppCompatActivity {
                                     case 1:
                                         new AlertDialog.Builder(NewExpenseActivity.this)
                                                 .setTitle("Make your selection")
-                                                .setItems(items_expense, new DialogInterface.OnClickListener() {
+                                                .setItems(items_savings, new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int item) {
                                                         switch (item){
                                                             case 0:

@@ -120,7 +120,7 @@ public class ReminderActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         textEmpty = (TextView) findViewById(R.id.textEmpty);
-        textEmpty.setText("No Notes");
+        textEmpty.setText("No Reminders");
         textEmpty1 = (TextView) findViewById(R.id.textEmpty1);
         textEmpty1.setVisibility(View.GONE);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.clayout);
@@ -137,7 +137,7 @@ public class ReminderActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ReminderActivity.this, EditNoteActivity.class);
+                Intent intent = new Intent(ReminderActivity.this, EditReminder.class);
                 intent.putExtra("edit", add);
                 startActivityForResult(intent, RequestResultCode.REQUEST_CODE_ADD_NOTE);
                 //overridePendingTransition(R.anim.slide_in_child_bottom, R.anim.slide_out);

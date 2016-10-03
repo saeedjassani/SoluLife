@@ -49,12 +49,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_BUDGET = "expense_budget";
     public static final String KEY_BUDGET_STATUS = "expense_budget_status";
 
+    public static final String KEY_REMINDER_ID = "reminder_id";
     public static final String KEY_REMINDER_DATE = "reminder_date";
     public static final String KEY_REMINDER_STATUS = "reminder_status";
     public static final String KEY_REMINDER_TIME = "reminder_time";
 
     private static final String CREATE_TABLE_REMINDER = "CREATE TABLE "
-            + TABLE_NOTES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TABLE_REMINDER + "(" + KEY_REMINDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_TITLE + " TEXT, "
             + KEY_CONTENT + " TEXT, "
             + KEY_UPDATED_AT + " TEXT, "
@@ -184,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Note note = new Note();
-                    note.setId(cursor.getLong(cursor.getColumnIndex(KEY_ID)));
+                    note.setId(cursor.getLong(cursor.getColumnIndex(KEY_REMINDER_ID)));
                     note.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
                     note.setContent(cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
                     note.setUpdatedAt(cursor.getString(cursor.getColumnIndex(KEY_UPDATED_AT)));
@@ -275,7 +276,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_REMINDER_DATE, note.getReminderDate());
         values.put(KEY_REMINDER_TIME, note.getReminderTime());
         values.put(KEY_REMINDER_STATUS, note.getReminderStatus());
-        db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
+        db.update(TABLE_NOTES, values, KEY_REMINDER_ID + " = ?", new String[]{String.valueOf(note.getId())});
     }
 
     public void updateExpense(Expense expense) {
@@ -295,7 +296,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteReminder(Reminder note) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_REMINDER, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
+        db.delete(TABLE_REMINDER, KEY_REMINDER_ID + " = ?", new String[]{String.valueOf(note.getId())});
     }
 
     public void deleteExpense(Expense expense) {

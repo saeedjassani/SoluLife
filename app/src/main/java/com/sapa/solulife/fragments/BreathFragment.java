@@ -58,12 +58,12 @@ public class BreathFragment extends Fragment {
                     @Override
                     public void run(){
                         vibrator.vibrate(10000);
-                        time += 7000;
+                        time += 6000;
                         vibrator.cancel();
                         Log.d("Breathe", "Going for... " + time);
-                        h.postDelayed(this, 7000);
+                        h.postDelayed(this, 6000);
                     }
-                }, 7000);
+                }, 6000);
             }
         });
 

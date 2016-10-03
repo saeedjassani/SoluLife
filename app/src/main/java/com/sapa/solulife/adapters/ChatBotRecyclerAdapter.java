@@ -45,11 +45,11 @@ public class ChatBotRecyclerAdapter extends RecyclerView.Adapter<ChatBotRecycler
 		switch (dataList.get(position).getPlace()) {
 			case 0:
 				holder.textView.setText(dataList.get(position).getMessage());
-				holder.textView.setBackgroundColor(Color.CYAN);
+				holder.textView.setTextColor(Color.WHITE);
 				break;
 			case 1:
 				holder.textView.setText(dataList.get(position).getMessage());
-				holder.textView.setBackgroundColor(Color.GRAY);
+				holder.textView.setTextColor(Color.BLACK);
 				break;
 		}
 	}

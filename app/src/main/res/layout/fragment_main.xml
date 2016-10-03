@@ -39,12 +39,12 @@
                                 android:weightSum="1.0">
 
                                 <android.support.v7.widget.CardView
-                                        android:id="@+id/schedule"
+                                        android:id="@+id/note"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="3dp"
                                         android:foreground="?android:selectableItemBackground"
-                                        android:layout_weight="0.5"
+                                        android:layout_weight="1.0"
                                         card_view:cardCornerRadius="10dp"
                                         card_view:cardElevation="2dp"
                                         card_view:cardPreventCornerOverlap="false"
@@ -55,8 +55,8 @@
                                                 android:layout_height="190dp"
                                                 android:gravity="center|left|top"
                                                 android:orientation="horizontal"
-                                                android:id="@+id/holder_relative_layout_schedule"
-                                                android:background="@drawable/schedule"
+                                                android:id="@+id/holder_relative_layout_note"
+                                                android:background="@drawable/note"
                                                 android:padding="8dp">
 
                                                 <TextView
@@ -67,12 +67,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_marginLeft="-20dp"
                                                         android:layout_marginTop="5dp"
-                                                        android:text="Schedule" />
+                                                        android:text="Note" />
 
                                         </RelativeLayout>
                                 </android.support.v7.widget.CardView>
 
-                                <android.support.v7.widget.CardView
+                                <!--<android.support.v7.widget.CardView
                                         android:id="@+id/note"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
 
                                         </RelativeLayout>
                                 </android.support.v7.widget.CardView>
-
+-->
                 </LinearLayout>
 
                         <LinearLayout
@@ -177,7 +177,7 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_marginLeft="-20dp"
                                                         android:layout_marginTop="5dp"
-                                                        android:text="Reminder" />
+                                                        android:text="Schedule" />
 
                                         </RelativeLayout>
                                 </android.support.v7.widget.CardView>

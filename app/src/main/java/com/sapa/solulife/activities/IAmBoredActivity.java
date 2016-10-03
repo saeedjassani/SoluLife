@@ -3,9 +3,12 @@ package com.sapa.solulife.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,8 @@ import com.sapa.solulife.async.ChatAsyncTask;
 import com.sapa.solulife.data.ChatData;
 import com.sapa.solulife.utils.Constants;
 
+import java.util.Locale;
+
 
 public class IAmBoredActivity extends AppCompatActivity {
 
@@ -25,10 +30,12 @@ public class IAmBoredActivity extends AppCompatActivity {
 	ChatBotRecyclerAdapter adapter;
 	RecyclerView.LayoutManager layoutManager;
 	EditText editText;
-	Button button;
+	FloatingActionButton button;
 	FirebaseApp firebaseApp;
 	FirebaseDatabase firebaseDatabase;
 	DatabaseReference databaseReference;
+	Toolbar toolbar;
+	TextToSpeech tts;
 
 	private View.OnClickListener listener = new View.OnClickListener() {
 		@Override
@@ -37,25 +44,39 @@ public class IAmBoredActivity extends AppCompatActivity {
 				case R.id.chat_send_button:
 					String message = editText.getText().toString();
 					if (message.equals("")) return;
-					Toast.makeText(IAmBoredActivity.this, "messafe is" + message, Toast.LENGTH_SHORT).show();
+					if (message.contains(" ")){
+						message.replace(" ", "#");
+					}
+//					Toast.makeText(IAmBoredActivity.this, "messafe is" + message, Toast.LENGTH_SHORT).show();
 					ChatData chatData = new ChatData(Constants.user_id, message, 1);
 					databaseReference.push().setValue(chatData);
 					editText.setText("");
 					new ChatAsyncTask(IAmBoredActivity.this, new ChatAsyncTask.ChatAsyncTaskCallback() {
 						@Override
 						public void onStart(boolean status) {
-							Toast.makeText(IAmBoredActivity.this, "please wait", Toast.LENGTH_SHORT).show();
+//							Toast.makeText(IAmBoredActivity.this, "please wait", Toast.LENGTH_SHORT).show();
 
 						}
 
 						@Override
 						public void onResult(boolean result) {
-							Toast.makeText(IAmBoredActivity.this, "res is " + result, Toast.LENGTH_SHORT).show();
+//							Toast.makeText(IAmBoredActivity.this, "res is " + result, Toast.LENGTH_SHORT).show();
 							if (result) {
 								if (Constants.userData.flag == 0) {
+//									Toast.makeText(IAmBoredActivity.this, Constants.userData.reply, Toast.LENGTH_LONG).show();
+									tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+										@Override
+										public void onInit(int status) {
+											if (status != TextToSpeech.ERROR) {
+												tts.setLanguage(Locale.ENGLISH);
+											}
+										}
+									});
 									ChatData chatData1 = new ChatData(Constants.user_id, Constants.userData.reply, 0);
+									tts.speak(Constants.userData.reply, 0, null);
 									databaseReference.push().setValue(chatData1);
 								} else {
+									Toast.makeText(IAmBoredActivity.this, "Playing your song", Toast.LENGTH_SHORT).show();
 									Intent intent = new Intent(Intent.ACTION_VIEW);
 									intent.setData(Uri.parse(Constants.userData.reply));
 									startActivity(Intent.createChooser(intent, "Open via"));
@@ -89,12 +110,19 @@ public class IAmBoredActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_iam_bored);
 		firebaseApp = FirebaseApp.getInstance();
 
+		toolbar = (Toolbar) findViewById(R.id.toolbar_chat);
+		toolbar.setTitle("Chat Bot");
+
+		setSupportActionBar(toolbar);
+
 		editText = (EditText) findViewById(R.id.chat_send_message);
-		button = (Button) findViewById(R.id.chat_send_button);
+		button = (FloatingActionButton) findViewById(R.id.chat_send_button);
 		recyclerView = (RecyclerView) findViewById(R.id.chat_recycler);
 		adapter = new ChatBotRecyclerAdapter(this);
 		layoutManager = new LinearLayoutManager(this);
 		setUpFirebase();
+		recyclerView.setLayoutManager(layoutManager);
+		recyclerView.setAdapter(adapter);
 	}
 
 	private void setUpFirebase() {

@@ -132,16 +132,11 @@ public class EditReminder extends AppCompatActivity {
                     setNoteResult();
                     //overridePendingTransition(R.anim.slide_in_child_bottom, R.anim.slide_out);
                     finish();
-                } else
+                } if (isNoteFormOk() && (reminderDateText.getText().toString().length() > 0) && (reminderTimeText.getText().toString().length() > 0)) {
+                    validateReminderDateTime();
+                    return;
+                }else
                     validateNoteForm();
-            }
-        });
-
-        saveButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Toast.makeText(getApplicationContext(), "Save Note", Toast.LENGTH_SHORT).show();
-                return true;
             }
         });
 
@@ -186,7 +181,7 @@ public class EditReminder extends AppCompatActivity {
                 onBack();
                 return true;
 
-            case R.id.reminder:
+            case R.id.remindermenu:
                 setReminder();
                 return true;
 
@@ -239,9 +234,7 @@ public class EditReminder extends AppCompatActivity {
 
         if (cal.compareTo(current) <= 0) {
             //The set Date/Time already passed
-            Toast.makeText(getApplicationContext(),
-                    "Invalid Date/Time",
-                    Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"Invalid Date/Time",Toast.LENGTH_LONG).show();
         } else {
             setAlarm(cal, note);
         }
@@ -298,7 +291,7 @@ public class EditReminder extends AppCompatActivity {
 
     private void setNoteResult() {
         note.setTitle(editTitle.getText().toString().trim());
-        note.setContent(editContent.getText().toString().trim());
+//        note.setContent(editContent.getText().toString().trim());
         note.setUpdatedAt(DATETIME_FORMAT.format(new Date()));
         note.setColor(selectedColor);
         note.setReminderDate(reminderDateText.getText().toString());

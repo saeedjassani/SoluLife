@@ -96,22 +96,13 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         holder.textRow.setText(note.getTitle());
         holder.textUpdated.setText(note.getUpdatedAt());
 
-        SpannableString hashText = new SpannableString(note.getContent());
-        Matcher matcher = Pattern.compile("#([A-Za-z1-9_-]+)").matcher(hashText);
-        while (matcher.find()) {
-            hashText.setSpan(new ForegroundColorSpan(Color.parseColor("#FF5722")), matcher.start(), matcher.end(), 0);
-        }
-
         if(note.getReminderStatus()==1){
             holder.star.setImageDrawable(context.getResources().getDrawable(R.drawable.blur));
         }
 
-        holder.textContent.setMaxLines(8);
         holder.cardView.setCardBackgroundColor(note.getColor());
 
         holder.textRow.setTextColor(color);
-        holder.textContent.setTextColor(color);
-        holder.textContent.setLinkTextColor(color);
         holder.textUpdated.setTextColor(color);
 
     }
